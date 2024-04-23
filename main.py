@@ -37,7 +37,7 @@ form_router = Router()
 storage = MemoryStorage()
 load_dotenv()
 logging.basicConfig(filename="bot.log", level=logging.INFO)
-bot = Bot(os.getenv('TOKEN'))
+bot: Bot = Bot(os.getenv('TOKEN'))
 dp = Dispatcher()
 
 
@@ -407,7 +407,7 @@ async def echo(message: Message):
         await message.reply("Я тебя не понимаю, бот находится в разработке")
 
 
-@dp.callback_query(lambda callback_query: callback_query.data in ['DEPOP', 'EBAY', 'KLEINANZEIGEN'])
+@dp.callback_query(lambda callback_query: callback_query.data in ['DEPOP', 'EBAY', 'KLEINANZEIGEN', 'ETSY'])
 async def handle_service_queries(callback_query: types.CallbackQuery):
     if callback_query.data == 'DEPOP':
         await bot.send_message(callback_query.from_user.id, text='DEPOP Сервисы', reply_markup=kb.depop_list)
@@ -415,6 +415,9 @@ async def handle_service_queries(callback_query: types.CallbackQuery):
         await bot.send_message(callback_query.from_user.id, text='EBAY Сервисы', reply_markup=kb.ebay_list)
     elif callback_query.data == 'KLEINANZEIGEN':
         await bot.send_message(callback_query.from_user.id, text='KLEINANZEIGEN Сервисы', reply_markup=kb.klein_list)
+    elif callback_query.data == "ETSY":
+        await bot.send_message(callback_query.from_user.id, text='ETSY Сервисы', reply_markup=kb.etsy_list)
+
 
 
 @dp.callback_query(lambda callback_query: callback_query.data == "EBAY_DE")
@@ -578,8 +581,7 @@ async def ebay_de_quantity(message: Message, state: ebay_states.Ebay.quantity):
     await state.clear()
 
 
-@dp.callback_query(
-    lambda callback_query: callback_query.data in ['DEPOP_AU', 'DEPOP_DE', 'DEPOP_FR', 'DEPOP_GB', 'DEPOP_IT',
+@dp.callback_query(lambda callback_query: callback_query.data in ['DEPOP_AU', 'DEPOP_DE', 'DEPOP_FR', 'DEPOP_GB', 'DEPOP_IT',
                                                    'DEPOP_US'])
 async def handler_depop(callback_query: types.CallbackQuery, state: depop_au_states.DepopAu.search):
     if callback_query.data == 'DEPOP_AU':
@@ -1608,6 +1610,17 @@ async def klein_after_parsing_choice(call: types.CallbackQuery, state: klein_sta
         collected_items = await klein_parser_output.klein_number_of_items()
         await bot.send_message(call.from_user.id, text=f"Товары без доставки были удалены из JSON файла\n\n"
                                                        f"Осталось товаров: {collected_items}")
+
+
+@dp.callback_query(lambda callback_query: callback_query.data.startswith('ETSY_'))
+async def etsy_handler(call: types.CallbackQuery):
+    call_data = call.data.split("_")[1]
+    if call.data == f"ETSY_{call_data}":
+        qwer = 1
+
+
+
+
 
 
 @dp.callback_query(lambda callback_query: callback_query.data == 'configurator')

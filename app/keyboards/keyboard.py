@@ -33,8 +33,8 @@ admin_panel = ReplyKeyboardMarkup(keyboard=admin_panel_kb, resize_keyboard=True,
 search_list_kb = [
     [InlineKeyboardButton(text='➡️ DEPOP', callback_data='DEPOP'),
      InlineKeyboardButton(text='➡️ EBAY', callback_data='EBAY')],
-    [InlineKeyboardButton(text='➡️ KLEINANZEIGEN', callback_data='KLEINANZEIGEN')]
-
+    [InlineKeyboardButton(text='➡️ KLEINANZEIGEN', callback_data='KLEINANZEIGEN'),
+     InlineKeyboardButton(text='➡️ ETSY', callback_data="ETSY")]
 ]
 
 search_list = InlineKeyboardMarkup(row_width=2, inline_keyboard=search_list_kb)
@@ -47,7 +47,18 @@ klein_list_kb = [
 klein_list = InlineKeyboardMarkup(row_width=2, inline_keyboard=klein_list_kb)
 
 
+etsy_list_kb = [
+    [InlineKeyboardButton(text='🇦🇺 ETSY.AU', callback_data='ETSY_AU'),
+     InlineKeyboardButton(text='🇩🇪 ETSY.DE', callback_data='ETSY_DE')],
+    [InlineKeyboardButton(text='🇪🇸 ETSY.ES', callback_data='ETSY_ES'),
+     InlineKeyboardButton(text='🇫🇷 ETSY.FR', callback_data='ETSY_FR')],
+    [InlineKeyboardButton(text='🇭🇺 ETSY.HU', callback_data='ETSY_HU'),
+     InlineKeyboardButton(text='🇮🇹 ETSY.IT', callback_data='ETSY_IT')],
+    [InlineKeyboardButton(text='🇵🇱 ETSY.PL', callback_data='ETSY_PL'),
+     InlineKeyboardButton(text='🇬🇧 ETSY.UK', callback_data='ETSY_UK')]
+]
 
+etsy_list = InlineKeyboardMarkup(row_width=2, inline_keyboard=etsy_list_kb)
 
 
 ebay_list_kb = [
